@@ -1,0 +1,50 @@
+# =============================================================================
+# Docker Build Ignore
+# =============================================================================
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Build artifacts
+build/
+dist/
+*.egg-info/
+wheels/
+
+# IDE
+.vscode/
+.idea/
+
+# Git
+.git/
+.gitignore
+
+# Documentation
+*.md
+docs/
+
+# Test files
+tests/
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Local data (will be mounted as volumes)
+data/
+logs/
+
+# Environment files (will be provided separately)
+.env
+.env.local
+
+# Misc
+*.log
+.DS_Store
