@@ -18,9 +18,10 @@ class RacePredictionRow(BaseModel):
     track_id: str
     total_laps: int
     
-    # 2. Driver/Team (2 columns)
+    # 2. Driver/Team (3 columns)
     driver_tla: str
-    team_name: str
+    driver_id: str
+    team_id: str
     
     # 3. Practice (2 columns)
     fp_best_time: float | None
@@ -51,7 +52,10 @@ class RacePredictionRow(BaseModel):
     # 9. Recent Form (1 column)
     last_3_avg_position: float = Field(alias="last_3_avg")
     
-    # 10. Target (1 column)
+    # 10. Gap to Winner (1 column)
+    gap_to_winner_sec: float | None
+    
+    # 11. Target (1 column)
     finishing_position: int
     
     class Config:

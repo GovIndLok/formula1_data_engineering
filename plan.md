@@ -208,7 +208,8 @@ class SessionIdentifier(BaseModel):
 ```python
 class DriverData(BaseModel):
     driver_tla: str             # VER, HAM, NOR
-    team_name: str
+    driver_id: str              # Unique driver identifier
+    team_id: str                # Unique team identifier
     fp_best_time: float | None
     fp_position: int | None
     quali_pos: int
@@ -249,9 +250,10 @@ class RacePredictionRow(BaseModel):
     track_id: str
     total_laps: int
     
-    # Driver/Team (2)
+    # Driver/Team (3)
     driver_tla: str
-    team_name: str
+    driver_id: str
+    team_id: str
     
     # Practice (2)
     fp_best_time: float | None
@@ -281,6 +283,9 @@ class RacePredictionRow(BaseModel):
     
     # Recent form (1)
     last_3_avg_position: float
+    
+    # Gap to Winner (1)
+    gap_to_winner_sec: float | None
     
     # TARGET (1)
     finishing_position: int

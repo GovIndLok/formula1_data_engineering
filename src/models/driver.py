@@ -5,7 +5,8 @@ class DriverData(BaseModel):
     Driver performance and standing data.
     """
     driver_tla: str = Field(min_length=3, max_length=3, description="Three-letter driver abbreviation (e.g., VER)")
-    team_name: str = Field(description="Constructor/Team name")
+    driver_id: str = Field(description="Unique driver identifier from FastF1")
+    team_id: str = Field(description="Unique team/constructor identifier from FastF1")
     
     # Practice Data
     fp_best_time: float | None = Field(default=None, description="Best practice lap time in seconds")
