@@ -317,8 +317,14 @@ class RacePredictionRow(BaseModel):
 
 #### [NEW] [src/extractors/sprint_extractor.py](file:///home/gov03/project/formaula_data_engineering/src/extractors/sprint_extractor.py)
 
-- Extract sprint qualifying and sprint race results
-- Calculate sprint points (8-7-6-5-4-3-2-1 system)
+- Detect Sprint weekends by checking if 'sprint' is in EventFormat
+- Extract **Sprint Qualifying** (Sprint Shootout) results:
+  - Position and best time (used instead of standard Qualifying for Sprint Race predictions)
+  - Calculate gap to pole (Sprint Qualifying pole)
+- Extract **Sprint Race** results:
+  - Finishing position and points (8-7-6-5-4-3-2-1 system)
+
+> **Note:** Sprint Qualifying results populate `quali_pos`, `quali_best_time`, `quali_gap_pole` when `target_session == "Sprint"`. Standard Qualifying is used when `target_session == "Race"`.
 
 #### [REFACTOR] [src/extractors/weather_extractor.py](file:///home/gov03/project/formaula_data_engineering/src/extractors/weather_extractor.py)
 
