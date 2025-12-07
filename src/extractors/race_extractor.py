@@ -54,17 +54,6 @@ class RaceExtractor:
             logger.warning("No results found for session", season=self.season, race_num=self.race_num)
             return []
 
-        # 1. Get Winner's Time (Position 1)
-        winner_time = None
-        try:
-            # Filter for Position 1. Use 1.0 (float) as Position is float
-            winner_mask = self.session.results['Position'] == 1.0
-            if winner_mask.any():
-                # Take the first one (should be only one)
-                winner_time = self.session.results.loc[winner_mask, 'Time'].iloc[0]
-        except Exception as e:
-            logger.warning("Could not determine winner time", error=str(e))
-
         for _, row in self.session.results.iterrows():
             driver_tla = row['Abbreviation']
             pos = row['Position']
@@ -79,39 +68,30 @@ class RaceExtractor:
             is_dnf = row['ClassifiedPosition'] in ['R', 'D', 'N', 'W']
             
             # --- Time Calculation Logic ---
-            # User Feedback: "driver in the top position we their proper timing and then the subsequent position the time difference is shown as the time"
-            # We need to convert gaps to total time.
+            # Final Logic:
+            # P1: 0.0
+            # Others: Use Time column value directly (assumed to be gap)
             
-            total_time_sec = None
+            time_gap_sec = None
             time_val = row['Time']
             
             if pd.notna(time_val):
                 if pos == 1.0:
-                    # Winner has absolute time
-                    total_time_sec = time_val.total_seconds()
-                elif winner_time is not None:
-                    # For others, check if 'Time' is likely a gap (smaller than winner time)
-                    # This heuristic handles cases where FastF1 returns gaps instead of absolute times
-                    if time_val < winner_time:
-                         # It's a gap, add to winner's time
-                         total_time_sec = (winner_time + time_val).total_seconds()
-                    else:
-                         # It's already absolute (e.g. +1 Lap might be handled differently, but if it's a time > winner, it's absolute)
-                         total_time_sec = time_val.total_seconds()
+                    time_gap_sec = 0.0
                 else:
-                    # Fallback if no winner time found
-                    total_time_sec = time_val.total_seconds()
+                    time_gap_sec = time_val.total_seconds()
 
             result_data = {
                 'driver_tla': driver_tla,
-                'team_name': row['TeamName'],
+                'driver_id': str(row['DriverId']),
+                'team_id': str(row['TeamId']),
                 'finishing_position': int(pos),
                 'starting_grid': int(row['GridPosition']),
                 'points': float(row['Points']),
                 'status': str(status),
                 'is_dnf': is_dnf,
                 'laps_completed': int(row['Laps']),
-                'time_sec': total_time_sec
+                'gap_to_winner_sec': time_gap_sec
             }
             results.append(result_data)
             
