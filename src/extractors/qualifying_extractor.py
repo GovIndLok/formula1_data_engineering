@@ -28,7 +28,7 @@ class QualifyingExtractor:
             logger.info("Qualifying session loaded", 
                        season=self.season, 
                        race_num=self.race_num, 
-                       event=self.session.event['Location'])
+                       location=self.session.event['Location'])
                        
         except Exception as e:
             logger.error("Failed to load qualifying session", 

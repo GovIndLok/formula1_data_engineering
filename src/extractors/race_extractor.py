@@ -1,7 +1,7 @@
 import fastf1
 import pandas as pd
 import structlog
-from typing import Any, Dict, List
+from typing import Dict, List
 
 logger = structlog.get_logger()
 
@@ -27,7 +27,7 @@ class RaceExtractor:
             logger.info("Race session loaded", 
                        season=self.season, 
                        race_num=self.race_num, 
-                       event=self.session.event['Location'])
+                       location=self.session.event['Location'])
                        
         except Exception as e:
             logger.error("Failed to load race session", 
@@ -65,7 +65,7 @@ class RaceExtractor:
                 
             # Handle Finishing Position
             status = row['Status']
-            is_dnf = row['ClassifiedPosition'] in ['R', 'D', 'N', 'W']
+            is_dnf = row['ClassifiedPosition'] in ['R', 'D', 'N', 'W'] # R: Retired, D: DNF, N: DNS, W: Withdrawn
             
             # --- Time Calculation Logic ---
             # Final Logic:
@@ -97,14 +97,14 @@ class RaceExtractor:
             
         return results
 
-    def get_session_info(self) -> Dict[str, Any]:
+    def get_session_info(self) -> Dict[str, int | str]:
         """Returns metadata about the race session."""
         if not self.session:
             self.load_session()
             
         event = self.session.event
         return {
-            'race_id': 0, # Placeholder, will be generated/mapped later
+            'race_id': int(f"{self.session.session_info['Meeting']['Key']}00"), # Placeholder, will be generated/mapped later
             'season': self.season,
             'race_num': self.race_num,
             'track_id': event['Location'],

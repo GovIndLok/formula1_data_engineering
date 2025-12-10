@@ -46,7 +46,7 @@ class PracticeExtractor:
             logger.info(f"{target} session loaded", 
                        season=self.season, 
                        race_num=self.race_num, 
-                       event=self.session.event['Location'])
+                       location=self.session.event['Location'])
                        
         except Exception as e:
             logger.error(f"Failed to load {target}", 
@@ -90,7 +90,7 @@ class PracticeExtractor:
             
             try:
                 # Get driver's fastest lap manually
-                driver_laps = self.session.laps.pick_driver(driver_tla)
+                driver_laps = self.session.laps.pick_drivers(driver_tla)
                 if not driver_laps.empty:
                     driver_fastest = driver_laps.pick_fastest()
                     driver_time = driver_fastest['LapTime']

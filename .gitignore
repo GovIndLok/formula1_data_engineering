@@ -11,3 +11,6 @@ wheels/
 
 # Test runs log data
 logtest.txt
+
+# Data files
+data/
