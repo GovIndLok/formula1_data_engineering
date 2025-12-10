@@ -36,7 +36,7 @@ class WeatherExtractor:
                        season=self.season, 
                        race_num=self.race_num,
                        session_type=self.session_type,
-                       event=self.session.event['Location'])
+                       location=self.session.event['Location'])
                        
         except Exception as e:
             logger.error("Failed to load session for weather extraction", 

@@ -88,14 +88,29 @@ class SprintExtractor:
 
         results = []
         for _, row in self.session.results.iterrows():
-            if pd.isna(row['Position']): continue
+            if pd.isna(row['Position']): 
+                continue
+
+            time_gap_sec = None
+            time_val = row['Time']
+            
+            if pd.notna(time_val):
+                if row['Position'] == 1.0:
+                    time_gap_sec = 0.0
+                else:
+                    time_gap_sec = time_val.total_seconds()
             
             results.append({
                 'driver_tla': row['Abbreviation'],
                 'driver_id': str(row['DriverId']),
                 'team_id': str(row['TeamId']),
                 'sprint_result': int(row['Position']),
-                'sprint_points': float(row['Points']) if pd.notna(row['Points']) else 0.0
+                'starting_grid': int(row['GridPosition']),
+                'sprint_points': float(row['Points']) if pd.notna(row['Points']) else 0.0,
+                'status': str(row['Status']),
+                'is_dnf': row['Status'] in ['R', 'D', 'N', 'W'],
+                'laps_completed': int(row['Laps']),
+                'gap_to_winner_sec': time_gap_sec
             })
         return results
 
@@ -163,3 +178,18 @@ class SprintExtractor:
             })
             
         return results
+    
+    def get_session_info(self) -> Dict[str, int | str]:
+        """Returns metadata about the race session."""
+        if not self.session:
+            self.load_session()
+            
+        event = self.session.event
+        return {
+            'race_id': int(f"{self.session.session_info['Meeting']['Key']}01"), # Placeholder, will be generated/mapped later
+            'season': self.season,
+            'race_num': self.race_num,
+            'track_id': event['Location'],
+            'session_code': f"{event['Location'][:3].upper()}{self.season}{self.race_num}_SPRINT", # Example format
+            'total_laps': int(self.session.total_laps) if pd.notna(self.session.total_laps) else 0
+        }

@@ -97,7 +97,8 @@ formaula_data_engineering/
 │   └── utils/                      # Utilities
 │       ├── __init__.py
 │       ├── config.py               # Configuration management
-│       └── logging.py              # Logging setup
+│       ├── logging.py              # Logging setup
+│       └── storage_io.py           # Storage I/O utilities
 │
 ├── data/                           # Data storage
 │   ├── raw/                        # Raw extracted data
