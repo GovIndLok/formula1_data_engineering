@@ -100,6 +100,7 @@ class WeatherExtractor:
                        session_type=self.session_type,
                        weather_data=weather_data)
             
+            # return weather data
             return weather_data
             
         except Exception as e:
