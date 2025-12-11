@@ -112,3 +112,15 @@ class QualifyingExtractor:
             results.append(result_data)
             
         return results
+    
+    def get_session_info(self) -> Dict[str, Any]:
+        """
+        Returns session information.
+        """
+
+        return {
+            'race_id': int(f"{self.session.session_info['Meeting']['Key']}00"), # since qualifying is always before race for races
+            'season': self.season,
+            'race_num': self.race_num,
+            'session_code': f"{self.session.event['Location'][:3].upper()}{self.season}{self.race_num}_RACE"
+        }
