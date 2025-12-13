@@ -8,8 +8,7 @@ Provides consistent file path generation and parquet I/O for:
 """
 import os
 from pathlib import Path
-from typing import Optional
-
+from typing import Optional, Union
 import pandas as pd
 import structlog
 
@@ -80,7 +79,7 @@ def get_gold_path(season: int) -> Path:
 # I/O Operations
 # =============================================================================
 
-def write_parquet(df: pd.DataFrame, path: Path) -> str:
+def write_parquet(data: Union[Dict[str, Any], List[Dict[str, Any]]], path: Path) -> str:
     """
     Write a DataFrame to parquet format, creating parent directories if needed.
     
@@ -94,6 +93,14 @@ def write_parquet(df: pd.DataFrame, path: Path) -> str:
     # Ensure parent directory exists
     path.parent.mkdir(parents=True, exist_ok=True)
     
+    # Convert to DataFrame
+    if isinstance(data, list):
+        df = pd.DataFrame(data)
+    elif isinstance(data, dict):
+        df = pd.DataFrame([data])
+    else:
+        raise ValueError("Data must be a list or dictionary")
+
     # Write to parquet
     df.to_parquet(path, engine='pyarrow', index=False)
     
