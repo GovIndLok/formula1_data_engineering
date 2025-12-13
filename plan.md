@@ -347,6 +347,9 @@ def extract_weather(session: fastf1.Session) -> WeatherData:
 - Get championship standings before each race
 - Calculate last 3 races average position
 
+> [!WARNING]
+> **Known Issue**: Need to resolve how to update championship points after sprint race but before main race. Currently, the standings extractor may not correctly reflect points earned during the sprint race when extracting data for the main race.
+
 ---
 
 ## Phase 4: Airflow DAGs
