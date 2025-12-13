@@ -46,7 +46,7 @@ def get_bronze_path(season: int, race_num: int, data_type: str) -> Path:
     Returns:
         Path to the bronze parquet file
     """
-    return DATA_OUTPUT_PATH / "bronze" / f"season={season}" / f"race={race_num}" / f"{data_type}.parquet"
+    return DATA_OUTPUT_PATH / "bronze" / f"season_{season}" / f"race_{race_num}" / f"{data_type}.parquet"
 
 
 def get_silver_path(season: int, race_num: int) -> Path:
@@ -60,7 +60,7 @@ def get_silver_path(season: int, race_num: int) -> Path:
     Returns:
         Path to the silver parquet file
     """
-    return DATA_OUTPUT_PATH / "silver" / f"season={season}" / f"race={race_num}" / "event_joined.parquet"
+    return DATA_OUTPUT_PATH / "silver" / f"season_{season}" / f"race_{race_num}" / "event_joined.parquet"
 
 
 def get_gold_path(season: int) -> Path:
@@ -73,7 +73,7 @@ def get_gold_path(season: int) -> Path:
     Returns:
         Path to the gold parquet file
     """
-    return DATA_OUTPUT_PATH / "gold" / f"season={season}" / "race_predictions.parquet"
+    return DATA_OUTPUT_PATH / "gold" / f"season_{season}" / "race_predictions.parquet"
 
 
 # =============================================================================
