@@ -64,15 +64,23 @@ default_argments={
     max_active_runs=1,
     default_args=default_argments,
     params={
-        "seasons": [2024],
-        "final_race_num": 23
+        "seasons": Parm(
+            default=[2024],
+            type=List[int],
+            description="Seasons(start, end or single for one season) to process"
+        ),
+        "final_race_num": Parm(
+            default=23,
+            type=int,
+            description="Final race number to process"
+        )
     },
     tags=["f1", "data-pipeline", "ml", "medallion"],
 )
 def dag():
     
     @task(task_id="get_season_events")
-    def get_season_events(season=dag.params.get("seasons"), final_race_num=dag.params.get("final_race_num")) -> List[Dict[str, Any]]:
+    def get_season_events(season: List[int] , final_race_num: int) -> List[Dict[str, Any]]:
         return EventsExtractor(start_season=season[0], end_season=season[-1], end_race_num=final_race_num).get_events()
 
     @task(task_id="split_events")
