@@ -128,3 +128,11 @@ def dag():
         session_info_path = write_parquet(session_info, session_info_path)
 
         return [quali_path, race_path, session_info_path]
+    
+    @task(task_id="extract_pratice_events")
+    def extract_pratice_events(pratice_events: Dict[str, Any]) -> List[str]:
+        pratice_events = PracticeExtractor(pratice_events.season, pratice_events.race_num)
+        pratice_events = pratice_events.extract_results()
+        pratice_path = get_bronze_path(pratice_events.season, pratice_events.race_num, "practice")
+        pratice_path = write_parquet(pratice_events, pratice_path)
+        return [pratice_path]

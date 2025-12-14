@@ -116,7 +116,7 @@ class PracticeExtractor:
 
     def get_session_info(self):
         return {
-            'is_sprint_weekend': 'sprint' if self.session_name == 'Practice 3' else 'standard',
+            'is_sprint_weekend': 'sprint' if self.session_name == 'Practice 1' else 'standard',
             'season': self.season,
             'race_num': self.race_num
         }
