@@ -136,3 +136,19 @@ def dag():
         pratice_path = get_bronze_path(pratice_events.season, pratice_events.race_num, "practice")
         pratice_path = write_parquet(pratice_events, pratice_path)
         return [pratice_path]
+    
+    @task(task_id="extract_sprint_weather")
+    def extract_sprint_weather(sprint_events: Dict[str, Any]) -> List[str]:
+        sprint_weather = WeatherExtractor(sprint_events.season, sprint_events.race_num, "Sprint")
+        sprint_weather_data = sprint_weather.extract_weather()
+        sprint_weather_path = get_bronze_path(sprint_events.season, sprint_events.race_num, "sprint_weather")
+        sprint_weather_path = write_parquet(sprint_weather_data, sprint_weather_path)
+        return [sprint_weather_path]
+    
+    @task(task_id="extract_race_weather")
+    def extract_race_weather(race_events: Dict[str, Any]) -> List[str]:
+        race_weather = WeatherExtractor(race_events.season, race_events.race_num, "Race")
+        race_weather_data = race_weather.extract_weather()
+        race_weather_path = get_bronze_path(race_events.season, race_events.race_num, "race_weather")
+        race_weather_path = write_parquet(race_weather_data, race_weather_path)
+        return [race_weather_path]
