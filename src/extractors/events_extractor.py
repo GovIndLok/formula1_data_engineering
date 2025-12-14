@@ -1,3 +1,4 @@
+from typing import List, Dict
 import fastf1
 import structlog
 

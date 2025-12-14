@@ -8,7 +8,7 @@ Provides consistent file path generation and parquet I/O for:
 """
 import os
 from pathlib import Path
-from typing import Optional, Union
+from typing import Optional, Union, Dict, Any, List
 import pandas as pd
 import structlog
 

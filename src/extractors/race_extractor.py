@@ -1,7 +1,7 @@
 import fastf1
 import pandas as pd
 import structlog
-from typing import Dict, List
+from typing import Dict, List, Any
 
 logger = structlog.get_logger()
 
