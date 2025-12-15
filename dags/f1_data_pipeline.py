@@ -160,3 +160,31 @@ def dag():
         race_weather_path = get_bronze_path(race_events.season, race_events.race_num, "race_weather")
         race_weather_path = write_parquet(race_weather_data, race_weather_path)
         return [race_weather_path]
+
+    #=============================
+    # Task Wiring   
+    #=============================
+
+    # Getting season events
+    season_events = get_season_events(season="{{params.seasons}}", final_race_num="{{params.final_race_num}}")
+
+    # Splitting season events into sprint and race events
+    sprint_events, race_events = split_events(season_events)
+
+    # Extracting sprint events
+    sprint_quali_path, sprint_path, sprint_session_info_path = extract_sprint_events.expand(sprint_events)
+
+    # Extracting race events
+    quali_path, race_path, session_info_path = extract_race_events.expand(race_events)
+
+    # Extracting pratice events
+    pratice_path = extract_pratice_events.expand(race_events)
+
+    # Extracting sprint weather
+    sprint_weather_path = extract_sprint_weather.expand(sprint_events)
+
+    # Extracting race weather
+    race_weather_path = extract_race_weather.expand(race_events)
+
+    # Extracting quali events
+    quali_events_path = extract_quali_events.expand(season_events)
