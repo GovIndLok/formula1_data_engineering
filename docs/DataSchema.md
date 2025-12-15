@@ -222,15 +222,3 @@ race_row = {
 ```
 
 ---
-
-## **Does This Help?**
-
-This table format makes it clear:
-- What data you need
-- How to structure sprint vs normal weekends
-- Which columns are targets vs features
-- How sprint results become features for race prediction
-
-**Next step:** Try creating just ONE row of data manually to test your understanding. Then we can build the code to automate it!
-
-Want me to help you with the data extraction code, or do you have specific questions about any column?
