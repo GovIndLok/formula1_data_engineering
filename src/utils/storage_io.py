@@ -82,14 +82,20 @@ def get_gold_path(season: int) -> Path:
 def write_parquet(data: Union[Dict[str, Any], List[Dict[str, Any]]], path: Path) -> str:
     """
     Write a DataFrame to parquet format, creating parent directories if needed.
+    Skips writing if the file already exists.
     
     Args:
         df: DataFrame to write
         path: Target path for the parquet file
     
     Returns:
-        String path to the written file
+        String path to the written file (or existing file if skipped)
     """
+    # Check if file already exists - skip if so
+    if path.exists():
+        logger.info("Skipped writing parquet file - file already exists", path=str(path))
+        return str(path)
+    
     # Ensure parent directory exists
     path.parent.mkdir(parents=True, exist_ok=True)
     

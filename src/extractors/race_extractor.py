@@ -22,7 +22,7 @@ class RaceExtractor:
             
             # Load only results data to be efficient (no telemetry/laps needed for just results)
             # Weather might be needed later but this is just race_extractor
-            self.session.load(weather=False, telemetry=False, laps=False)
+            self.session.load(weather=False, telemetry=False, laps=True, messages=False)
             
             logger.info("Race session loaded", 
                        season=self.season, 

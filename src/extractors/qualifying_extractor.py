@@ -23,7 +23,7 @@ class QualifyingExtractor:
         try:
             self.session = fastf1.get_session(self.season, self.race_num, 'Qualifying')
             # Load laps to ensure best lap data is present if needed, but results usually sufficient
-            self.session.load(weather=False, telemetry=False, laps=True)
+            self.session.load(weather=False, telemetry=False, laps=False, messages=False)
             
             logger.info("Qualifying session loaded", 
                        season=self.season, 
