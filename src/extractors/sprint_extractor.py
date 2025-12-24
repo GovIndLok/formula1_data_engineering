@@ -37,7 +37,7 @@ class SprintExtractor:
 
         try:
             self.session = fastf1.get_session(self.season, self.race_num, 'Sprint')
-            self.session.load(weather=False, telemetry=False, laps=False)
+            self.session.load(weather=False, telemetry=False, laps=True, messages=False)
             logger.info("Sprint Race session loaded")
         except Exception as e:
             logger.error("Failed to load sprint race session", error=str(e))

@@ -33,6 +33,7 @@ from .qualifying_extractor import QualifyingExtractor
 from .sprint_extractor import SprintExtractor
 from .weather_extractor import WeatherExtractor
 from .standings_extractor import StandingsExtractor
+from .events_extractor import EventsExtractor
 
 __all__ = [
     'RaceExtractor',
@@ -41,5 +42,6 @@ __all__ = [
     'SprintExtractor',
     'WeatherExtractor',
     'StandingsExtractor',
+    'EventsExtractor'
     'CACHE_PATH',
 ]

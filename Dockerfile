@@ -60,10 +60,10 @@ COPY --from=builder /app/dags ./dags
 
 # Create data directories
 RUN mkdir -p /app/data/raw /app/data/processed /app/data/cache \
-    && chown -R appuser:appuser /app
+    && chown -R app_user:app_user /app
 
 # Switch to non-root user
-USER appuser
+USER app_user
 
 # Default command
 CMD ["python", "-c", "print('F1 Data Engineering Pipeline Ready')"]

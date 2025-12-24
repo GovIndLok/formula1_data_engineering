@@ -13,12 +13,10 @@ wheels/
 logtest.txt
 
 # Data files
-data/cache/*
-data/processed/*
-data/raw/*
-!data/cache/.gitkeep
-!data/processed/.gitkeep
-!data/raw/.gitkeep
+data/
 
 # log files
 logs/
+
+# .env files
+.env
